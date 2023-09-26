@@ -1,10 +1,19 @@
-
-
 # Setup
-- Create a venv and install the packages in requirements.txt
+- Run the `install_dependencies.sh` script to install requirements and setup a virtual enviornment (`.venv`)
 - Create `.env` file and populate it with API keys:
-    - OPENAI_API_KEY
-    - JIRA_API_KEY
+    - `OPENAI_API_KEY`
+    - `JIRA_API_KEY`
+
+# Running Locally
+Run the `run_app.sh` script to start a local instance of the application:
+```
+./run_app.sh
+```
+
+Once the application starts, open your browser and navigate to:
+```
+http://localhost:5000
+```
 
 # Minimum Viable Product
 - Set up a frontend framework
