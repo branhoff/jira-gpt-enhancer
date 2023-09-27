@@ -55,9 +55,13 @@ def create_jira_issue(**kwargs: Any) -> Dict[str, Any]:
             "project": kwargs.get('project', 'DEFAULT_PROJECT'),
             "summary": kwargs.get('summary', 'DEFAULT_SUMMARY'),
             "description": kwargs.get('description', 'DEFAULT_DESCRIPTION'),
-            "issuetype": kwargs.get('issuetype', 'DEFAULT_ISSUETYPE'),
+            "issuetype": kwargs.get('issuetype', 'Story'),
+            # acceptance criteria
             "customfield_19900": kwargs.get('customfield_19900', 'DEFAULT_CUSTOMFIELD_19900'),
-            "customfield_24661": kwargs.get('customfield_24661', [])
+            # agile team
+            "customfield_24661": kwargs.get('customfield_24661', []),
+            # story points
+            "customfield_24472": kwargs.get('customfield_24472', 3.0)
         }
     }
 
