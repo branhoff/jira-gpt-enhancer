@@ -4,6 +4,7 @@ from app.services import jira_service
 
 jira_bp = Blueprint('jira_routes', __name__)
 
+
 @jira_bp.route('/api/jira/create_issue/', methods=['POST'])
 def create_jira_issue_route() -> Dict[str, Any]:
     """
@@ -12,12 +13,8 @@ def create_jira_issue_route() -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Returns the JSON response from the Jira API after creating the issue.
     """
-    data = request.json
-    summary = data.get('summary')
-    description = data.get('description')
-    issue_type = data.get('issue_type', 'Bug')
-
-    response = jira_service.create_jira_issue(summary, description, issue_type)
+    data: Dict[str, Any] = request.json
+    response: Dict[str, Any] = jira_service.create_jira_issue(**data["fields"])
     return jsonify(response)
 
 
@@ -30,7 +27,7 @@ def get_jira_fields() -> Dict[str, Any]:
         Dict[str, Any]: Returns the JSON response containing Jira fields.
     """
     print(f"get-fields - {jira_service}")
-    response = jira_service.get_fields()
+    response: Dict[str, Any] = jira_service.get_fields()
     return jsonify(response)
 
 
@@ -46,14 +43,7 @@ def update_jira_field(field_id: str) -> Dict[str, Any]:
         Dict[str, Any]: Returns the JSON response from the Jira API after updating the field.
     """
     # Assuming that the payload for updating is in the request's JSON body.
-    data = request.json
+    data: Dict[str, Any] = request.json
     response = jira_service.update_custom_field(field_id, **data)
     return jsonify(response)
-
-@jira_bp.route('/api/jira/create-issue/', methods=['POST'])
-def create_jira_issue() -> Dict[str, Any]:
-    data = request.get_data()
-    print(f"create_issue - {data}")
-    return jsonify("{foo:'xxx'}")
-
 
