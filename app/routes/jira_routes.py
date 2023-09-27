@@ -14,6 +14,7 @@ def create_jira_issue_route() -> Dict[str, Any]:
         Dict[str, Any]: Returns the JSON response from the Jira API after creating the issue.
     """
     data: Dict[str, Any] = request.json
+    print(f"xxx create jira {data}")
     response: Dict[str, Any] = jira_service.create_jira_issue(**data["fields"])
     return jsonify(response)
 
@@ -59,7 +60,7 @@ def get_jira_issue_createmeta() -> Dict[str, Any]:
     project_keys = request.args.get('projectKeys', 'SSEP')
     issue_type_names = request.args.get('issuetypeNames', 'Story')
     expand = request.args.get('expand', 'projects.issuetypes.fields')
-    
+
     response: Dict[str, Any] = jira_service.get_issue_createmeta(project_keys, issue_type_names, expand)
     return jsonify(response)
 
