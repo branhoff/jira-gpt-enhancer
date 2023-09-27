@@ -5,7 +5,7 @@ from app.services import jira_service
 jira_bp = Blueprint('jira_routes', __name__)
 
 
-@jira_bp.route('/api/jira/create_issue/', methods=['POST'])
+@jira_bp.route('/api/jira/create-issue/', methods=['POST'])
 def create_jira_issue_route() -> Dict[str, Any]:
     """
     Create a new Jira issue.
