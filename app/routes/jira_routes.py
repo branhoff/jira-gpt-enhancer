@@ -29,6 +29,7 @@ def get_jira_fields() -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Returns the JSON response containing Jira fields.
     """
+    print(f"get-fields - {jira_service}")
     response = jira_service.get_fields()
     return jsonify(response)
 
@@ -48,4 +49,11 @@ def update_jira_field(field_id: str) -> Dict[str, Any]:
     data = request.json
     response = jira_service.update_custom_field(field_id, **data)
     return jsonify(response)
+
+@jira_bp.route('/api/jira/create-issue/', methods=['POST'])
+def create_jira_issue() -> Dict[str, Any]:
+    data = request.get_data()
+    print(f"create_issue - {data}")
+    return jsonify("{foo:'xxx'}")
+
 
