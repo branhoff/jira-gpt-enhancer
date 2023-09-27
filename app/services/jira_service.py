@@ -51,12 +51,12 @@ def create_jira_issue(**kwargs: Any) -> Dict[str, Any]:
 
     payload: Dict[str, Dict] = {
         "fields": {
-            "project": kwargs.get('project', ''),
-            "summary": kwargs.get('summary', ''),
-            "description": kwargs.get('description', ''),
-            "issuetype": kwargs.get('issuetype', ''),
-            "customfield_19900": kwargs.get('customfield_19900', ''),
-            "customfield_24661": kwargs.get('customfield_24661', '')
+            "project": kwargs.get('project', 'DEFAULT_PROJECT'),
+            "summary": kwargs.get('summary', 'DEFAULT_SUMMARY'),
+            "description": kwargs.get('description', 'DEFAULT_DESCRIPTION'),
+            "issuetype": kwargs.get('issuetype', 'DEFAULT_ISSUETYPE'),
+            "customfield_19900": kwargs.get('customfield_19900', 'DEFAULT_CUSTOMFIELD_19900'),
+            "customfield_24661": kwargs.get('customfield_24661', [])
         }
     }
 
@@ -92,11 +92,7 @@ def update_custom_field(field_id: str) -> Dict[str, Any]:
     return request_jira("PUT", f"field/{field_id}", payload)
 
 
-def get_issue_createmeta(
-    project_keys: str = "HELIOS", 
-    issue_type_names: str = "Story", 
-    expand: Optional[str] = None
-    ) -> Dict[str, Any]:
+def get_issue_createmeta( project_keys: str, issue_type_names: str, expand: Optional[str] = None) -> Dict[str, Any]:
     """
     Get the metadata required to create Jira issues.
 

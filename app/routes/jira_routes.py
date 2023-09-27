@@ -47,3 +47,20 @@ def update_jira_field(field_id: str) -> Dict[str, Any]:
     response = jira_service.update_custom_field(field_id, **data)
     return jsonify(response)
 
+
+@jira_bp.route('/api/jira/issue/createmeta/', methods=['GET'])
+def get_jira_issue_createmeta() -> Dict[str, Any]:
+    """
+    Fetch metadata required to create Jira issues.
+
+    Returns:
+        Dict[str, Any]: Returns the JSON response from the Jira API.
+    """
+    project_keys = request.args.get('projectKeys', 'SSEP')
+    issue_type_names = request.args.get('issuetypeNames', 'Story')
+    expand = request.args.get('expand', 'projects.issuetypes.fields')
+    
+    response: Dict[str, Any] = jira_service.get_issue_createmeta(project_keys, issue_type_names, expand)
+    return jsonify(response)
+
+
