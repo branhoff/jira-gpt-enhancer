@@ -29,7 +29,8 @@ def request_jira(method: str, endpoint: str, data: Optional[Dict] = None) -> Dic
             f"{BASE_URL}/{endpoint}",
             data=json.dumps(data) if data else None,
             headers=HEADERS,
-            auth=AUTH
+            auth=AUTH,
+            verify=False
         )
         response.raise_for_status()  
         return response.json()

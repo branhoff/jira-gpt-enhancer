@@ -22,7 +22,7 @@
 
 
 # GET ISSUE CREATEMETA DATA
-curl -v -X GET -H "Accept: application/json" 'http://127.0.0.1:5000/api/jira/issue/createmeta/?projectKeys=SSEP&issuetypeNames=Bug&expand=projects.issuetypes.fields'
+curl -v -X GET -H "Accept: application/json" 'http://localhost:5000/api/jira/issue/createmeta/?projectKeys=SSEP&issuetypeNames=Bug&expand=projects.issuetypes.fields'
 
 
 
