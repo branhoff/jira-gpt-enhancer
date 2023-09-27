@@ -9,4 +9,4 @@ export FLASK_ENV=development  # Optional: Enables debug mode
 export FLASK_RUN_PORT=5000
 
 # Run the Flask app
-flask run
+flask --app run.py --debug run
