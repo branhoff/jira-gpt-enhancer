@@ -2,16 +2,16 @@ import requests
 from requests.auth import HTTPBasicAuth
 import json
 from decouple import config
-from typing import Union, Dict, Any
+from typing import Union, Dict, Any, Optional
 
-BASE_URL = "https://climate.jira.com/rest/api/2"
-AUTH = HTTPBasicAuth("brandon.hoffman@climate.com", config('JIRA_API_KEY'))
-HEADERS = {
+BASE_URL: str = "https://climate.jira.com/rest/api/2"
+AUTH: HTTPBasicAuth = HTTPBasicAuth("brandon.hoffman@climate.com", config('JIRA_API_KEY'))
+HEADERS: Dict[str, str] = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
 
-def request_jira(method: str, endpoint: str, data: Union[Dict, None] = None) -> Union[Dict[str, Any], Dict[str, str]]:
+def request_jira(method: str, endpoint: str, data: Optional[Dict] = None) -> Dict[str, Any]:
     """
     Send a request to the Jira API.
 
@@ -24,7 +24,7 @@ def request_jira(method: str, endpoint: str, data: Union[Dict, None] = None) -> 
         Union[Dict[str, Any], Dict[str, str]]: Returns the JSON response from the API or an error dictionary.
     """
     try:
-        response = requests.request(
+        response: requests.Response = requests.request(
             method,
             f"{BASE_URL}/{endpoint}",
             data=json.dumps(data) if data else None,
@@ -36,27 +36,32 @@ def request_jira(method: str, endpoint: str, data: Union[Dict, None] = None) -> 
     except requests.RequestException as e:
         return {"error": str(e)}
 
-def create_jira_issue(summary: str, description: str, issue_type: str = "Bug") -> Dict:
+
+def create_jira_issue(**kwargs: Any) -> Dict[str, Any]:
     """
     Create a Jira issue.
 
     Args:
-        summary (str): The summary of the Jira issue.
-        description (str): The description of the Jira issue.
-        issue_type (str, optional): The type of the Jira issue. Defaults to "Bug".
+        **kwargs: The fields and their values to create a Jira issue.
 
     Returns:
         Dict: Returns the JSON response from the Jira API.
     """
-    payload = {
+    # Default structure for the Jira issue payload
+
+    payload: Dict[str, Dict] = {
         "fields": {
-            "project": {"key": "HELIOS"},
-            "summary": summary,
-            "description": description,
-            "issuetype": {"name": issue_type}
+            "project": kwargs.get('project', ''),
+            "summary": kwargs.get('summary', ''),
+            "description": kwargs.get('description', ''),
+            "issuetype": kwargs.get('issuetype', ''),
+            "customfield_19900": kwargs.get('customfield_19900', ''),
+            "customfield_24661": kwargs.get('customfield_24661', '')
         }
     }
+
     return request_jira("POST", "issue", payload)
+
 
 def get_fields() -> str:
     """
@@ -65,10 +70,11 @@ def get_fields() -> str:
     Returns:
         str: Returns a stringified JSON of all Jira fields.
     """
-    response = request_jira("GET", "field")
+    response: Dict[str, Any] = request_jira("GET", "field")
     return json.dumps(response, sort_keys=True, indent=4, separators=(",", ": "))
 
-def update_custom_field(field_id: str) -> Dict:
+
+def update_custom_field(field_id: str) -> Dict[str, Any]:
     """
     Update a custom field in Jira.
 
@@ -84,3 +90,23 @@ def update_custom_field(field_id: str) -> Dict:
         "searcherKey": "com.atlassian.jira.plugin.system.customfieldtypes:cascadingselectsearcher"
     }
     return request_jira("PUT", f"field/{field_id}", payload)
+
+
+def get_issue_createmeta(
+    project_keys: str = "HELIOS", 
+    issue_type_names: str = "Story", 
+    expand: Optional[str] = None
+    ) -> Dict[str, Any]:
+    """
+    Get the metadata required to create Jira issues.
+
+    Returns:
+        Dict: Returns the JSON response from the Jira API.
+    """
+
+    params: str = f"projectKeys={project_keys}&issuetypeNames={issue_type_names}"
+    if expand:
+        params += f"&expand={expand}"
+    endpoint: str = f"issue/createmeta?{params}"
+
+    return request_jira("GET", endpoint)
