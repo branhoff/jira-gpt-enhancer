@@ -19,7 +19,7 @@ curl -X POST -H "Content-Type: application/json" \
             }],
             "customfield_24472": 4
         }
-    }' http://localhost:5000/api/jira/create_issue/
+    }' http://localhost:5000/api/jira/create-issue/
 
 
 # GET ISSUE CREATEMETA DATA
