@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Form</title>
+    <!-- Add any additional CSS or JavaScript files here -->
+</head>
+<body>
+    <h1>Input Form</h1>
+    <form action="/submit" method="post"> <!-- Replace '/submit' with the route you want to handle form submission -->
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div>
+            <label for="criteria">Acceptance Criteria:</label>
+            <textarea id="criteria" name="criteria" required></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
