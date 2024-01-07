@@ -6,37 +6,37 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background-color: #f4f4f4;
+            padding: 20px;
         }
-        .container {
+        .container, .select-container {
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-right: 10px;
             font-weight: bold;
         }
         textarea, input[type="text"], select {
-            width: 100%;
+            flex-grow: 1;
             padding: 10px;
-            margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #f36401;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            margin-left: 10px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #cc6634;
         }
     </style>
 </head>
@@ -46,17 +46,39 @@
         <div class="container">
             <label for="title">Title:</label>
             <textarea id="title" name="title" required></textarea>
+            <button type="button">Generate Title</button>
         </div>
         <div class="container">
             <label for="description">Description:</label>
             <textarea id="description" name="description" required></textarea>
+            <button type="button">Generate Description</button>
         </div>
         <div class="container">
             <label for="criteria">Acceptance Criteria:</label>
             <textarea id="criteria" name="criteria" required></textarea>
+            <button type="button">Generate Acceptance Criteria</button>
         </div>
-        <!-- Additional fields can be added here following the same pattern -->
-        <button type="submit">Submit</button>
+        <div class="select-container">
+            <label for="jiraBoard">Jira Board:</label>
+            <select id="jiraBoard" name="jiraBoard">
+                <!-- Add options here -->
+            </select>
+        </div>
+        <div class="select-container">
+            <label for="agileTeam">Agile Team:</label>
+            <select id="agileTeam" name="agileTeam">
+                <!-- Add options here -->
+            </select>
+        </div>
+        <div class="select-container">
+            <label for="issueType">Issue Type:</label>
+            <select id="issueType" name="issueType">
+                <option value="Story">Story</option>
+                <option value="Bug">Bug</option>
+                <option value="Task">Task</option>
+            </select>
+        </div>
+        <button type="submit">Create Issue</button>
     </form>
 </body>
 </html>
