@@ -5,7 +5,7 @@
     <!-- Title -->
     <div>
       <label>Title</label>
-      <textarea v-model="jiraFields.summary" />
+      <textarea v-model="jiraFields.title" />
       <button @click="generateTitle">Generate Title</button>
     </div>
 
@@ -38,20 +38,13 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import {
-  getJiraCreateMeta
-  // postToChatGPT,
-  // getTitleFromGPT,
-  // getDescriptionFromGPT,
-  // getACFromGPT,
-  // postToCreateJiraIssue
-} from '../services/chatGPTService';
+import { promptChatGPT } from '../services/backendService';
 
 export default {
   name: 'ChatGPTForm',
   setup() {
     const jiraFields = ref({
-      summary: '',
+      title: '',
       description: '',
       acceptanceCriteria: '',
       // ... other fields
@@ -61,7 +54,13 @@ export default {
     const modal = ref(false);
 
     const generateTitle = async () => {
-      // Call API and update jiraFields.summary
+      try {
+        // eslint-disable-next-line no-unused-vars
+        const response = await promptChatGPT(jiraFields.value.title, 'gpt-3.5-turbo');
+        // Process response to extract and set the generated title
+      } catch (error) {
+        console.error('Error generating title:', error);
+      }
     };
 
     const generateDescription = async () => {
@@ -77,9 +76,7 @@ export default {
     };
 
     onMounted(async () => {
-       // eslint-disable-next-line no-unused-vars
-      const data = await getJiraCreateMeta();
-      // Process and set agileTeam and issueTypes
+
     });
 
     return {
