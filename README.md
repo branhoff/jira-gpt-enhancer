@@ -7,7 +7,7 @@ The Jira-ChatGPT Integrator is a powerful tool that combines the capabilities of
 The repository is organized into two main directories:
 
 - `backend`: Contains the Python backend code which handles interactions with Jira and ChatGPT.
-- `frontend`: Contains the React frontend application where users can interact with the system.
+- `frontend`: Contains the Vue frontend application where users can interact with the system.
 
 ## Getting Started
 
