@@ -22,5 +22,3 @@ response = requests.post(url, headers=headers, data=json.dumps(data), verify=Fal
 response_json = response.json()
 
 print(response_json)
-
-#print(response_json['choices'][0]['message']['content'].strip())
